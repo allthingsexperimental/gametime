@@ -13,7 +13,7 @@ var chat *chatGroup
 
 func Render(props map[string]interface{}) fyne.CanvasObject {
 	return fyne.NewContainerWithLayout(
-		layout.NewGridLayoutWithRows(2),
+		layout.NewVBoxLayout(),
 		renderChatGroup(),
 		renderCommandBar(),
 	)
@@ -40,9 +40,9 @@ func (c *chatGroup) MinSize() fyne.Size {
 	s := c.Group.MinSize()
 	if len(c.items) > 0 {
 		ch := 0
-		for _, i := range c.items {
-			ch += i.MinSize().Height
-		}
+		// for _, i := range c.items {
+		// 	ch += i.MinSize().Height
+		// }
 		s.Height = s.Height + ch
 	}
 	return s
@@ -62,7 +62,7 @@ type cmdEntry struct {
 
 func (e *cmdEntry) onEnter() {
 	roll := dice.Roller(20)
-	l := widget.NewLabel(fmt.Sprintf("You rolled a: %v", roll))
+	l := widget.NewLabel(fmt.Sprintf("You rolled a %v", roll))
 	chat.Append(l)
 	chat.Resize(chat.MinSize())
 }
